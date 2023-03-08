@@ -12,5 +12,7 @@ runs:
   using: 'composite'
   steps:
     - shell: bash
+      env:
+        K8SCONFIG: ${{ inputs.k8sConfig}}
       working-directory: ${{ inputs.scriptPath}}
       run: npm i && npm run deploy

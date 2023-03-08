@@ -3,9 +3,9 @@ import core = require("@actions/core");
 import { createDeployment, createService, createVolumeClaim } from "./apply";
 
 const kc = new k8s.KubeConfig();
-const config = core.getInput("k8sConfig", { required: true });
+
 //kc.loadFromDefault();
-kc.loadFromString(config);
+kc.loadFromString(process.env.K8SCONFIG);
 
 const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
 
