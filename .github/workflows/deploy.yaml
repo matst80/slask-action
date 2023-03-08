@@ -5,9 +5,7 @@ jobs:
   slask:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    # - name: "npm ci"
-    #   run: npm ci
+    - uses: actions/checkout@v3
     - name: slaskit
       uses: ./
       with:
