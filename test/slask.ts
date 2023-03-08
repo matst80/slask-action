@@ -11,6 +11,7 @@ const scriptFile = core.getInput("scriptPath");
 import(scriptFile)
   .then((m) => m.default as DeploymentConfig)
   .then((deployment) => {
+    core.info(JSON.stringify(github.context, null, 2));
     const kc = new k8s.KubeConfig();
     const config = core.getInput("k8sConfig");
     if (config) {
@@ -25,11 +26,11 @@ import(scriptFile)
     deployment({
       createDeployment: (namespace, deployment) =>
         createDeployment(namespace, deployment, k8sAppsApi).then(({ body }) => {
-          core.info(`Upserted deployment: ${body.metadata.name}`);
+          core.info(`Applied deployment: ${body.metadata.name}`);
         }),
       createService: (namespace, service) =>
         createService(namespace, service, k8sCoreApi).then(({ body }) => {
-          core.info(`Upserted service: ${body.metadata.name}`);
+          core.info(`Applied service: ${body.metadata.name}`);
         }),
     });
   });
