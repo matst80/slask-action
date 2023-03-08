@@ -7,7 +7,6 @@ import { createDeployment, createService } from "./apply";
 const scriptFile = core.getInput("scriptPath");
 
 core.info("Loading deployment script: " + scriptFile);
-core.startGroup("Deployment");
 
 export default import(scriptFile)
   .then((m) => m.default as DeploymentConfig)
@@ -43,9 +42,7 @@ export default import(scriptFile)
             }),
       },
       github.context
-    ).then(() => {
-      core.endGroup();
-    });
+    );
   })
   .catch((e) => {
     core.setFailed(e);

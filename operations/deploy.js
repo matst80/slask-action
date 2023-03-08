@@ -2,11 +2,11 @@
 module.exports = async ({ createDeployment, createService }, { sha }) => {
 	const namespace = 'default'
 	const labels = { app: 'slask' }
-	const shortSha = sha.slice(0, 7)
+	// const shortSha = sha.slice(0, 7)
 	await createDeployment(namespace,
 		{
 			metadata: {
-				name: "slask2",
+				name: "slask-nginx",
 				labels,
 			},
 			spec: {
@@ -22,7 +22,7 @@ module.exports = async ({ createDeployment, createService }, { sha }) => {
 						containers: [
 							{
 								name: "slask2",
-								image: `nginx:${shortSha}`,
+								image: `nginx`,
 								imagePullPolicy: "Always",
 								ports: [
 									{
