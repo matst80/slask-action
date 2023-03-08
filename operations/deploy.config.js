@@ -1,5 +1,5 @@
 /** @type {import('../src/types').DeploymentConfig} */
-module.exports = ({ createDeployment, createService }) => {
+module.exports = ({ createDeployment, createService }, context) => {
 	const namespace = 'default'
 	const labels = { app: 'slask' }
 

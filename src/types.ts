@@ -1,4 +1,5 @@
-import { V1Deployment, V1Service } from "@kubernetes/client-node";
+import type { Context } from "@actions/github/lib/context";
+import type { V1Deployment, V1Service } from "@kubernetes/client-node";
 
 export type DeployFunctions = {
   createDeployment: (namespace: string, data: V1Deployment) => Promise<unknown>;
@@ -6,5 +7,6 @@ export type DeployFunctions = {
 };
 
 export type DeploymentConfig = (
-  deployFunction: DeployFunctions
+  deployFunctions: DeployFunctions,
+  context: Context
 ) => Promise<any>;
