@@ -1,7 +1,8 @@
-/** @type {import('./types').DeploymentConfig} */
+/** @type {import('../src/types').DeploymentConfig} */
 module.exports = ({ createDeployment, createService }) => {
 	const namespace = 'default'
 	const labels = { app: 'slask' }
+
 	createDeployment(namespace,
 		{
 			metadata: {
