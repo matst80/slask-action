@@ -3,44 +3,46 @@ module.exports = async ({ createDeployment, createService }, { sha }) => {
 	const namespace = 'default'
 	const labels = { app: 'slask' }
 	// const shortSha = sha.slice(0, 7)
-	await createDeployment(namespace,
-		{
-			metadata: {
-				name: "slask-nginx",
-				labels,
-			},
-			spec: {
-				replicas: 1,
-				selector: {
-					matchLabels: labels,
+	const apps = await Promise.all(['a', 'b', 'c'].map(image =>
+		createDeployment(namespace,
+			{
+				metadata: {
+					name: "slask-" + image,
+					labels,
 				},
-				template: {
-					metadata: {
-						labels,
+				spec: {
+					replicas: 1,
+					selector: {
+						matchLabels: labels,
 					},
-					spec: {
-						containers: [
-							{
-								name: "slask2",
-								image: `nginx`,
-								imagePullPolicy: "Always",
-								ports: [
-									{
-										name: "http",
-										containerPort: 80,
-									},
-								],
-								resources: {
-									requests: {
-										memory: "28Mi",
+					template: {
+						metadata: {
+							labels,
+						},
+						spec: {
+							containers: [
+								{
+									name: "slask2",
+									image,
+									tty: true,
+									imagePullPolicy: "Always",
+									ports: [
+										{
+											name: "http",
+											containerPort: 80,
+										},
+									],
+									resources: {
+										requests: {
+											memory: "28Mi",
+										},
 									},
 								},
-							},
-						],
+							],
+						},
 					},
 				},
-			},
-		})
+			})))
 	await createService(namespace, {
 		metadata: {
 			name: "slask",
