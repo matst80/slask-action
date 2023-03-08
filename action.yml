@@ -7,7 +7,10 @@ inputs:
     required: true
   scriptPath:
     description: "Path to the deployment to apply"
-    default: 'operations/deployment.ts'
+    default: 'operations'
 runs:
-  using: 'node16'
-  main: 'lib/main.js'
+  using: 'composite'
+  steps:
+    - shell: bash
+      working-directory: ${{ inputs.scriptPath}}
+      run: npm i && npm run deploy
