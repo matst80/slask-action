@@ -1,0 +1,17 @@
+{
+  "name": "ts-kubernetes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "kubernetes-types": "^1.26.0"
+  },
+  "dependencies": {
+    "@actions/core": "^1.0.0",
+    "@actions/github": "^2.0.1",
+    "@kubernetes/client-node": "^0.18.1"
+  }
+}

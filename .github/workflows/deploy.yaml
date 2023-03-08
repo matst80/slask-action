@@ -1,0 +1,13 @@
+name: "Check"
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: slaskit
+      uses: ./
+      with:
+        k8sConfig: ${{ secrets.K8S_CONFIG }}
+        

@@ -1,0 +1,14 @@
+name: 'Scripted kubernetes deployment'
+description: 'Scripted kubernetes deployment with GitHub Actions'
+author: 'slaskinc'
+inputs:
+  k8sConfig:
+    description: 'Kubernetes config'
+    required: true
+  scriptPath:
+    description: "Path to the deployment to apply"
+    default: 'operations/deployment.ts'
+runs:
+  using: 'node16'
+  pre: 'npm i'
+  main: 'lib/main.js'
