@@ -1,1 +1,2 @@
 # slask-action
+insta slask
