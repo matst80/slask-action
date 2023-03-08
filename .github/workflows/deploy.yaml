@@ -4,6 +4,8 @@ on: [push, pull_request]
 jobs:
   slask:
     runs-on: self-hosted
+    env:
+      NAMESPACE: slaskar
     steps:
     - uses: actions/checkout@v3
     - name: slaskit
