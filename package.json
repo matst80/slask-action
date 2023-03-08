@@ -7,6 +7,7 @@
   "author": "",
   "scripts": {
     "build": "esbuild src/main.ts --bundle --outdir=lib --platform=node --target=node16",
+    "build:slask": "esbuild test/slask.ts --bundle --outdir=lib --platform=node --target=node16",
     "sample": "ts-node src/sample.ts"
   },
   "license": "ISC",

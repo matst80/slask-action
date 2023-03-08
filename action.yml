@@ -10,7 +10,7 @@ inputs:
     default: 'operations'
 runs:
   using: node16
-  main: test/slask.js
+  main: lib/slask.js
   # using: 'composite'
   # steps:
   #   - shell: bash
