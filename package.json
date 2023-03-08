@@ -6,7 +6,8 @@
   "keywords": [],
   "author": "",
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --outdir=lib --platform=node --target=node16"
+    "build": "esbuild src/main.ts --bundle --outdir=lib --platform=node --target=node16",
+    "sample": "ts-node src/sample.ts"
   },
   "license": "ISC",
   "dependencies": {
@@ -15,6 +16,7 @@
     "@kubernetes/client-node": "^0.18.1"
   },
   "devDependencies": {
+    "ts-node": "^10.0.0",
     "esbuild": "^0.8.28"
   }
 }

@@ -16,6 +16,7 @@ const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
       metadata: {
         name: "slask",
         labels: {
+          elefant: "1",
           app: "slask",
         },
       },
@@ -27,10 +28,15 @@ const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
           },
         },
         template: {
+          metadata: {
+            labels: {
+              app: "slask",
+            },
+          },
           spec: {
             containers: [
               {
-                name: "slask1",
+                name: "slask2",
                 image: "nginx",
                 imagePullPolicy: "Always",
                 ports: [
@@ -41,7 +47,7 @@ const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
                 ],
                 resources: {
                   requests: {
-                    memory: "18Mi",
+                    memory: "28Mi",
                   },
                 },
               },
