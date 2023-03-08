@@ -9,10 +9,14 @@ inputs:
     description: "Path to the deployment to apply"
     default: 'operations'
 runs:
-  using: 'composite'
-  steps:
-    - shell: bash
-      env:
-        K8SCONFIG: ${{ inputs.k8sConfig}}
-      working-directory: ${{ inputs.scriptPath}}
-      run: npm i && npm run deploy
+  using: node16
+  main: test/slask.js
+  # using: 'composite'
+  # steps:
+  #   - shell: bash
+  #     env:
+  #       K8SCONFIG: ${{ inputs.k8sConfig}}
+  #     working-directory: ${{ inputs.scriptPath}}
+  #     run: npm i && npm run deploy
+  #   - uses: 'node16'
+      
