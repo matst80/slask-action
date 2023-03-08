@@ -1,27 +1,21 @@
 /** @type {import('./types').DeploymentConfig} */
 module.exports = ({ createDeployment, createService }) => {
 	const namespace = 'default'
+	const labels = { app: 'slask' }
 	createDeployment(namespace,
 		{
 			metadata: {
 				name: "slask2",
-				labels: {
-					elefant: "1",
-					app: "slask",
-				},
+				labels,
 			},
 			spec: {
 				replicas: 1,
 				selector: {
-					matchLabels: {
-						app: "slask",
-					},
+					matchLabels: labels,
 				},
 				template: {
 					metadata: {
-						labels: {
-							app: "slask",
-						},
+						labels,
 					},
 					spec: {
 						containers: [
@@ -46,4 +40,18 @@ module.exports = ({ createDeployment, createService }) => {
 				},
 			},
 		})
+	createService(namespace, {
+		metadata: {
+			name: "slask",
+		},
+		spec: {
+			selector: labels,
+			ports: [
+				{
+					name: "http",
+					port: 80,
+				}
+			]
+		}
+	})
 }
