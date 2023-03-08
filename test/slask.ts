@@ -8,22 +8,24 @@ core.info("Hello world");
 
 const scriptFile = core.getInput("scriptPath");
 
-const deployment = require(scriptFile) as DeploymentConfig;
+import(scriptFile)
+  .then((m) => m.default as DeploymentConfig)
+  .then((deployment) => {
+    const kc = new k8s.KubeConfig();
+    const config = core.getInput("k8sConfig");
+    if (config) {
+      kc.loadFromString(config);
+    } else {
+      kc.loadFromDefault();
+    }
 
-const kc = new k8s.KubeConfig();
-const config = core.getInput("k8sConfig");
-if (config) {
-  kc.loadFromString(config);
-} else {
-  kc.loadFromDefault();
-}
+    const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
+    const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
 
-const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
-const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
-
-deployment({
-  createDeployment: (namespace, deployment) =>
-    createDeployment(namespace, deployment, k8sAppsApi),
-  createService: (namespace, service) =>
-    createService(namespace, service, k8sCoreApi),
-});
+    deployment({
+      createDeployment: (namespace, deployment) =>
+        createDeployment(namespace, deployment, k8sAppsApi),
+      createService: (namespace, service) =>
+        createService(namespace, service, k8sCoreApi),
+    });
+  });
