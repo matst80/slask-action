@@ -1,6 +1,10 @@
 import * as k8s from "@kubernetes/client-node";
 import core = require("@actions/core");
-import { createDeployment, createService, createVolumeClaim } from "./apply";
+import {
+  createDeployment,
+  createService,
+  createVolumeClaim,
+} from "../test/apply";
 
 const kc = new k8s.KubeConfig();
 const config = core.getInput("k8sConfig", { required: true });

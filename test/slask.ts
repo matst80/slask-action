@@ -1,10 +1,29 @@
-import core = require("@actions/core");
-import github = require("@actions/github");
-import fs = require("fs");
+import * as core from "@actions/core";
+import * as github from "@actions/github";
+import * as k8s from "@kubernetes/client-node";
+import { DeploymentConfig } from "../operations/types";
+import { createDeployment, createService } from "./apply";
 
 core.info("Hello world");
-const payload = JSON.stringify(github.context.payload, undefined, 2);
-console.log(`The event payload: ${payload}`);
-fs.readdirSync(".").forEach((file) => {
-  console.log(file);
+
+const scriptFile = core.getInput("scriptPath");
+
+const deployment = require(scriptFile) as DeploymentConfig;
+
+const kc = new k8s.KubeConfig();
+const config = core.getInput("k8sConfig");
+if (config) {
+  kc.loadFromString(config);
+} else {
+  kc.loadFromDefault();
+}
+
+const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
+const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
+
+deployment({
+  createDeployment: (namespace, deployment) =>
+    createDeployment(namespace, deployment, k8sAppsApi),
+  createService: (namespace, service) =>
+    createService(namespace, service, k8sCoreApi),
 });

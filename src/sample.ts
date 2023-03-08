@@ -1,5 +1,9 @@
 import * as k8s from "@kubernetes/client-node";
-import { createDeployment, createService, createVolumeClaim } from "./apply";
+import {
+  createDeployment,
+  createService,
+  createVolumeClaim,
+} from "../test/apply";
 
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
