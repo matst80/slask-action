@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "declaration": true,
-    "sourceRoot": "src"
+    "sourceRoot": "src",
+    "skipLibCheck": true
   },
   "include": ["src/types.ts"]
 }

@@ -8,7 +8,7 @@ jobs:
       NAMESPACE: slaskar
     steps:
     - uses: actions/checkout@v3
-    - name: slaskit
+    - name: Deploy scripted application
       uses: ./
       with:
         k8sConfig: ${{ secrets.K8S_CONFIG }}
