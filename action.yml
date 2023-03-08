@@ -10,5 +10,4 @@ inputs:
     default: 'operations/deployment.ts'
 runs:
   using: 'node16'
-  pre: 'npm i'
   main: 'lib/main.js'
