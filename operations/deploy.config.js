@@ -1,9 +1,9 @@
 /** @type {import('../src/types').DeploymentConfig} */
-module.exports = ({ createDeployment, createService }, context) => {
+module.exports = async ({ createDeployment, createService }, context) => {
 	const namespace = 'default'
 	const labels = { app: 'slask' }
 
-	createDeployment(namespace,
+	await createDeployment(namespace,
 		{
 			metadata: {
 				name: "slask2",
@@ -41,7 +41,7 @@ module.exports = ({ createDeployment, createService }, context) => {
 				},
 			},
 		})
-	createService(namespace, {
+	await createService(namespace, {
 		metadata: {
 			name: "slask",
 		},
