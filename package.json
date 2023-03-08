@@ -5,10 +5,16 @@
   "main": "lib/main.js",
   "keywords": [],
   "author": "",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --outdir=lib --platform=node --target=node16"
+  },
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/github": "^2.0.1",
     "@kubernetes/client-node": "^0.18.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.8.28"
   }
 }
