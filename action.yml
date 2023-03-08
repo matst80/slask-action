@@ -7,7 +7,7 @@ inputs:
     required: true
   scriptPath:
     description: "Path to the deployment to apply"
-    default: './operations/deploy.config.js'
+    default: './operations/deploy.config'
 runs:
   using: node16
   main: lib/slask.js
