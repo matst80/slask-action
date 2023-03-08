@@ -1,8 +1,8 @@
-name: "Check"
+name: "slaska"
 on: [push, pull_request]
 
 jobs:
-  check:
+  slask:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
