@@ -4,8 +4,8 @@ import { createDeployment, createService, createVolumeClaim } from "./apply";
 
 const kc = new k8s.KubeConfig();
 const config = core.getInput("k8sConfig", { required: true });
-kc.loadFromDefault();
-//kc.loadFromString(config);
+//kc.loadFromDefault();
+kc.loadFromString(config);
 
 const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
 
