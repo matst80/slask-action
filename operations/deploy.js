@@ -2,7 +2,7 @@
 module.exports = async ({ createDeployment, createService }, context) => {
 	const namespace = 'default'
 	const labels = { app: 'slask' }
-	console.log(process.env.NAMESPACE)
+
 	await createDeployment(namespace,
 		{
 			metadata: {
