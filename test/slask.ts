@@ -24,8 +24,12 @@ import(scriptFile)
 
     deployment({
       createDeployment: (namespace, deployment) =>
-        createDeployment(namespace, deployment, k8sAppsApi),
+        createDeployment(namespace, deployment, k8sAppsApi).then(({ body }) => {
+          core.info(`Upserted deployment: ${body.metadata.name}`);
+        }),
       createService: (namespace, service) =>
-        createService(namespace, service, k8sCoreApi),
+        createService(namespace, service, k8sCoreApi).then(({ body }) => {
+          core.info(`Upserted service: ${body.metadata.name}`);
+        }),
     });
   });
