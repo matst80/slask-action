@@ -5,15 +5,13 @@ describe("Builder", () => {
   it("should build a simple deployment", () => {
     const labels = { app: "nginx" };
     const builder = new DeploymentBuilder("nginx", labels)
-      .withVolume("config")
-      .withConfigMap("config")
-      .build()
-      .withContainer("nginx-web", "nginx:latest")
-      .withPort(80, "http")
-      .build()
-      .withContainer("slask-api", "slask:latest")
-      .withPort(3000, "rest")
-      .build();
+      .withVolume("config", (b) => b.withConfigMap("config"))
+      .withContainer({ name: "nginx-web", image: "nginx:latest" }, (b) =>
+        b.withPort(80, "http")
+      )
+      .withContainer({ name: "slask-api", image: "slask:latest" }, (b) =>
+        b.withPort(3000, "rest")
+      );
 
     expect(builder.build()).toEqual({
       metadata: {

@@ -1,5 +1,6 @@
 import type { Context } from "@actions/github/lib/context";
 import type {
+  V1ConfigMap,
   V1Deployment,
   V1Ingress,
   V1PersistentVolumeClaim,
@@ -14,6 +15,7 @@ export type DeployFunctions = {
     namespace: string,
     data: V1PersistentVolumeClaim
   ) => Promise<unknown>;
+  createConfigMap: (namespace: string, data: V1ConfigMap) => Promise<unknown>;
 };
 
 export type DeploymentConfig = (

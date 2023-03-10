@@ -2,6 +2,7 @@ import {
   V1Container,
   V1ContainerPort,
   V1Deployment,
+  V1ResourceRequirements,
   V1Volume,
 } from "@kubernetes/client-node";
 
@@ -10,10 +11,13 @@ export class DeploymentContainerBuilder {
   #result: V1Container;
   constructor(
     private readonly builder: DeploymentBuilder,
-    name: string,
-    image: string
+    containerDefaults: {
+      name: string;
+      image: string;
+      resources?: V1ResourceRequirements;
+    }
   ) {
-    this.#result = { name, image, resources: {} };
+    this.#result = { resources: {}, ...containerDefaults };
   }
   withPort(containerPort: number, name?: string): DeploymentContainerBuilder {
     if (name) this.#ports.push({ containerPort, name });
@@ -68,15 +72,23 @@ export class DeploymentBuilder {
     this.#replicas = replicas;
     return this;
   }
-  withVolume(name: string): VolumeBuilder {
+  withVolume(
+    name: string,
+    fn: (builder: VolumeBuilder) => void
+  ): DeploymentBuilder {
     const volumeBuilder = new VolumeBuilder(this, name);
     this.#volumes.push(volumeBuilder);
-    return volumeBuilder;
+    fn(volumeBuilder);
+    return this;
   }
-  withContainer(name: string, image: string): DeploymentContainerBuilder {
-    const podBuilder = new DeploymentContainerBuilder(this, name, image);
+  withContainer(
+    container: { name: string; image: string },
+    fn: (builder: DeploymentContainerBuilder) => void
+  ): DeploymentBuilder {
+    const podBuilder = new DeploymentContainerBuilder(this, container);
     this.#pods.push(podBuilder);
-    return podBuilder;
+    fn(podBuilder);
+    return this;
   }
   build(): V1Deployment {
     return {

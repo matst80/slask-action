@@ -1,5 +1,6 @@
 import * as k8s from "@kubernetes/client-node";
 import {
+  V1ConfigMap,
   V1Deployment,
   V1Ingress,
   V1PersistentVolumeClaim,
@@ -98,4 +99,15 @@ export const createIngress = (
     k8sApi.listNamespacedIngress,
     k8sApi.createNamespacedIngress,
     k8sApi.replaceNamespacedIngress
+  )(namespace, data, k8sApi);
+
+export const createConfigMap = (
+  namespace: string,
+  data: V1ConfigMap,
+  k8sApi: k8s.CoreV1Api
+) =>
+  updateOrCreate(
+    k8sApi.listNamespacedConfigMap,
+    k8sApi.createNamespacedConfigMap,
+    k8sApi.replaceNamespacedConfigMap
   )(namespace, data, k8sApi);

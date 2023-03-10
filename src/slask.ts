@@ -4,6 +4,7 @@ import * as k8s from "@kubernetes/client-node";
 import { DeploymentConfig } from "./types";
 import { join } from "path";
 import {
+  createConfigMap,
   createDeployment,
   createIngress,
   createPersistentVolumeClaim,
@@ -65,6 +66,9 @@ export default import(file)
         ),
         createPersistentVolumeClaim: wrap("volume claim", (namespace, data) =>
           createPersistentVolumeClaim(namespace, data, k8sCoreApi)
+        ),
+        createConfigMap: wrap("configmap", (namespace, data) =>
+          createConfigMap(namespace, data, k8sCoreApi)
         ),
       },
       github.context
