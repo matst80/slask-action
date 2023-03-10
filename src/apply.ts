@@ -1,6 +1,7 @@
 import * as k8s from "@kubernetes/client-node";
 import {
   V1Deployment,
+  V1Ingress,
   V1PersistentVolumeClaim,
   V1Service,
 } from "@kubernetes/client-node";
@@ -86,4 +87,15 @@ export const createService = (
     k8sApi.listNamespacedService,
     k8sApi.createNamespacedService,
     k8sApi.replaceNamespacedService
+  )(namespace, data, k8sApi);
+
+export const createIngress = (
+  namespace: string,
+  data: V1Ingress,
+  k8sApi: k8s.NetworkingV1Api
+) =>
+  updateOrCreate(
+    k8sApi.listNamespacedIngress,
+    k8sApi.createNamespacedIngress,
+    k8sApi.replaceNamespacedIngress
   )(namespace, data, k8sApi);

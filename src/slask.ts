@@ -2,11 +2,23 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as k8s from "@kubernetes/client-node";
 import { DeploymentConfig } from "./types";
-import { createDeployment, createService } from "./apply";
+import { createDeployment, createIngress, createService } from "./apply";
 
 const scriptFile = core.getInput("scriptPath");
 
 core.info("Loading deployment script: " + scriptFile);
+
+const wrap =
+  <R>(type: string, fn: (...args: any[]) => Promise<R>) =>
+  (...args: any[]) => {
+    return fn(...args)
+      .then(({ body }: any) => {
+        core.info(`Applied ${type}: ${body.metadata.name}`);
+      })
+      .catch((e) => {
+        core.warning(e);
+      });
+  };
 
 export default import(scriptFile)
   .then((m) => m.default as DeploymentConfig)
@@ -21,25 +33,19 @@ export default import(scriptFile)
 
     const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
     const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
+    const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
 
     return deployment(
       {
-        createDeployment: (namespace, deployment) =>
+        createDeployment: wrap("deployment", (namespace, deployment) =>
           createDeployment(namespace, deployment, k8sAppsApi)
-            .then(({ body }) => {
-              core.info(`Applied deployment: ${body.metadata.name}`);
-            })
-            .catch((e) => {
-              core.warning(e);
-            }),
-        createService: (namespace, service) =>
+        ),
+        createService: wrap("service", (namespace, service) =>
           createService(namespace, service, k8sCoreApi)
-            .then(({ body }) => {
-              core.info(`Applied service: ${body.metadata.name}`);
-            })
-            .catch((e) => {
-              core.warning(e);
-            }),
+        ),
+        createIngress: wrap("ingress", (namespace, data) =>
+          createIngress(namespace, data, k8sNetworkingApi)
+        ),
       },
       github.context
     );

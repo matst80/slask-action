@@ -23,6 +23,11 @@ module.exports = async ({ createDeployment, createService }, { sha }) => {
 							{
 								name: "slask2",
 								image: `nginx`,
+								livenessProbe: {
+									httpGet: {
+										path: "/",
+									}
+								},
 								imagePullPolicy: "Always",
 								ports: [
 									{
