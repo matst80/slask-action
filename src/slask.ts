@@ -5,7 +5,6 @@ import { DeploymentConfig } from "./types";
 import {
   createDeployment,
   createIngress,
-  createPersistantVolumeClaim,
   createPersistentVolumeClaim,
   createService,
 } from "./apply";
@@ -22,7 +21,10 @@ const wrap =
   (...args: any[]) => {
     return fn(...args)
       .then(({ body }: any) => {
-        core.info(`Applied ${type}: ${body.metadata.name}`);
+        if (body?.metadata?.name) {
+          core.setOutput(body?.metadata?.name, body);
+          core.info(`Applied ${type}: ${body.metadata.name}`);
+        }
       })
       .catch((e) => {
         core.warning(e);
@@ -64,5 +66,7 @@ export default import(scriptFile)
   })
   .catch((e) => {
     core.setFailed(e);
-    core.endGroup();
+  })
+  .finally(() => {
+    core.info("Done");
   });

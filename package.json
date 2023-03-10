@@ -1,7 +1,6 @@
 {
-  "name": "@action/ts-kubernetes",
+  "name": "ts-kubernetes-action",
   "version": "0.1.0",
-  "private": false,
   "description": "Configures a Kubernetes deployment with a GitHub Action using JavaScript/TypeScript",
   "main": "dist/types.d.ts",
   "files": [
