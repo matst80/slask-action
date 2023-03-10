@@ -111,3 +111,14 @@ export const createConfigMap = (
     k8sApi.createNamespacedConfigMap,
     k8sApi.replaceNamespacedConfigMap
   )(namespace, data, k8sApi);
+
+export const createSecret = (
+  namespace: string,
+  data: V1ConfigMap,
+  k8sApi: k8s.CoreV1Api
+) =>
+  updateOrCreate(
+    k8sApi.listNamespacedSecret,
+    k8sApi.createNamespacedSecret,
+    k8sApi.replaceNamespacedSecret
+  )(namespace, data, k8sApi);

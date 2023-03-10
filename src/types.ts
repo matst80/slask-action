@@ -4,6 +4,7 @@ import type {
   V1Deployment,
   V1Ingress,
   V1PersistentVolumeClaim,
+  V1Secret,
   V1Service,
 } from "@kubernetes/client-node";
 
@@ -16,6 +17,7 @@ export type DeployFunctions = {
     data: V1PersistentVolumeClaim
   ) => Promise<unknown>;
   createConfigMap: (namespace: string, data: V1ConfigMap) => Promise<unknown>;
+  createSecret: (namespace: string, data: V1Secret) => Promise<unknown>;
 };
 
 export type DeploymentConfig = (

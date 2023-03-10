@@ -8,6 +8,7 @@ import {
   createDeployment,
   createIngress,
   createPersistentVolumeClaim,
+  createSecret,
   createService,
 } from "./apply";
 
@@ -69,6 +70,9 @@ export default import(file)
         ),
         createConfigMap: wrap("configmap", (namespace, data) =>
           createConfigMap(namespace, data, k8sCoreApi)
+        ),
+        createSecret: wrap("secret", (namespace, data) =>
+          createSecret(namespace, data, k8sCoreApi)
         ),
       },
       github.context
