@@ -54,7 +54,6 @@ module.exports = async ({ createDeployment, createService, createIngress }, { sh
 			selector: labels,
 			ports: [
 				{
-					name: "http",
 					port: 8080,
 				}
 			]
