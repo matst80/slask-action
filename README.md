@@ -1,6 +1,8 @@
 # slask-action
 Deploy scripted kubernetes applications without dependencies
 
+to convert your yaml deployments to json/slask deployments you can try https://yaml-converter.knatofs.se/
+
 example `action.yaml`:
 
 ```yaml
