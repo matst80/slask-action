@@ -36,6 +36,10 @@ export default import(scriptFile)
   .then((deployment) => {
     const kc = new k8s.KubeConfig();
     const config = core.getInput("k8sConfig");
+
+    const payload = JSON.stringify(github.context.payload, undefined, 2);
+    console.log(`The event payload: ${payload}`);
+
     if (config) {
       kc.loadFromString(config);
     } else {
