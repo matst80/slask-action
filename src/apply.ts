@@ -68,7 +68,7 @@ export const createDeployment = (
     k8sApi.replaceNamespacedDeployment
   )(namespace, data, k8sApi);
 
-export const createVolumeClaim = (
+export const createPersistentVolumeClaim = (
   namespace: string,
   data: V1PersistentVolumeClaim,
   k8sApi: k8s.CoreV1Api

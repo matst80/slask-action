@@ -2,7 +2,13 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as k8s from "@kubernetes/client-node";
 import { DeploymentConfig } from "./types";
-import { createDeployment, createIngress, createService } from "./apply";
+import {
+  createDeployment,
+  createIngress,
+  createPersistantVolumeClaim,
+  createPersistentVolumeClaim,
+  createService,
+} from "./apply";
 
 const scriptFile =
   core.getInput("scriptPath") ??
@@ -48,6 +54,9 @@ export default import(scriptFile)
         ),
         createIngress: wrap("ingress", (namespace, data) =>
           createIngress(namespace, data, k8sNetworkingApi)
+        ),
+        createPersistentVolumeClaim: wrap("volume claim", (namespace, data) =>
+          createPersistentVolumeClaim(namespace, data, k8sCoreApi)
         ),
       },
       github.context
