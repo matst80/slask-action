@@ -1,7 +1,7 @@
 name: 'Scripted kubernetes deployment'
 description: 'Scripted kubernetes deployment with GitHub Actions'
 icon: activity
-color: reen
+color: green
 author: 'Mats Törnberg'
 inputs:
   k8sConfig:
