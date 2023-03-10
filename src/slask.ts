@@ -33,7 +33,10 @@ const wrap =
       });
   };
 
-export default import(join(localPath, scriptFile))
+const file = join(localPath, scriptFile);
+core.info(file);
+
+export default import(file)
   .then((m) => m.default as DeploymentConfig)
   .then((deployment) => {
     const kc = new k8s.KubeConfig();
