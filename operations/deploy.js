@@ -20,6 +20,11 @@ module.exports = async ({ createDeployment, createService, createIngress }, { sh
 						labels,
 					},
 					spec: {
+						imagePullSecrets: [
+							{
+								name: 'regcred',
+							},
+						],
 						containers: [
 							{
 								name: "converter",
