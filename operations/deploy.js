@@ -64,6 +64,7 @@ module.exports = async ({ createDeployment, createService, createIngress }, { sh
 			name: "yaml-converter",
 		},
 		spec: {
+			ingressClassName: "nginx",
 			rules: [
 				{
 					host: "yaml-converter.knatofs.se",

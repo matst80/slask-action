@@ -4,7 +4,10 @@ import * as k8s from "@kubernetes/client-node";
 import { DeploymentConfig } from "./types";
 import { createDeployment, createIngress, createService } from "./apply";
 
-const scriptFile = core.getInput("scriptPath");
+const scriptFile =
+  core.getInput("scriptPath") ??
+  process.env.SCRIPT_PATH ??
+  "operations/deploy.js";
 
 core.info("Loading deployment script: " + scriptFile);
 
