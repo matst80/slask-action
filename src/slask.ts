@@ -7,6 +7,7 @@ import {
   createConfigMap,
   createDeployment,
   createIngress,
+  createNamespace,
   createPersistentVolumeClaim,
   createSecret,
   createService,
@@ -73,6 +74,9 @@ export default import(file)
         ),
         createSecret: wrap("secret", (namespace, data) =>
           createSecret(namespace, data, k8sCoreApi)
+        ),
+        createNamespace: wrap("namespace", (data) =>
+          createNamespace(data, k8sCoreApi)
         ),
       },
       github.context

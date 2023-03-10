@@ -3,6 +3,7 @@ import type {
   V1ConfigMap,
   V1Deployment,
   V1Ingress,
+  V1Namespace,
   V1PersistentVolumeClaim,
   V1Secret,
   V1Service,
@@ -18,6 +19,7 @@ export type DeployFunctions = {
   ) => Promise<unknown>;
   createConfigMap: (namespace: string, data: V1ConfigMap) => Promise<unknown>;
   createSecret: (namespace: string, data: V1Secret) => Promise<unknown>;
+  createNamespace: (namespace: V1Namespace) => Promise<unknown>;
 };
 
 export type DeploymentConfig = (

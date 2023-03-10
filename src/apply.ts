@@ -3,6 +3,7 @@ import {
   V1ConfigMap,
   V1Deployment,
   V1Ingress,
+  V1Namespace,
   V1PersistentVolumeClaim,
   V1Service,
 } from "@kubernetes/client-node";
@@ -78,6 +79,15 @@ export const createPersistentVolumeClaim = (
     k8sApi.listNamespacedPersistentVolumeClaim,
     k8sApi.createNamespacedPersistentVolumeClaim
   )(namespace, data, k8sApi);
+
+export const createNamespace = (data: V1Namespace, k8sApi: k8s.CoreV1Api) => {
+  return k8sApi.listNamespace().then(async ({ body }) => {
+    const exists = body.items.find(
+      ({ metadata }) => metadata?.name === data.metadata?.name
+    );
+    return exists ?? (await k8sApi.createNamespace(data));
+  });
+};
 
 export const createService = (
   namespace: string,
