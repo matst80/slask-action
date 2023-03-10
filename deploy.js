@@ -1,4 +1,4 @@
-/** @type {import('../src/types').DeploymentConfig} */
+/** @type {import('./src/types').DeploymentConfig} */
 module.exports = async (
   { createDeployment, createService, createIngress },
   { sha }
