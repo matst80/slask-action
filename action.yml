@@ -1,6 +1,8 @@
 name: 'Scripted kubernetes deployment'
 description: 'Scripted kubernetes deployment with GitHub Actions'
-author: 'slaskinc'
+icon: activity
+color: reen
+author: 'Mats Törnberg'
 inputs:
   k8sConfig:
     description: 'Kubernetes config'
