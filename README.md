@@ -8,7 +8,7 @@ example `action.yaml`:
 ```yaml
 jobs:
   slask:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Deploy scripted application
