@@ -1,12 +1,13 @@
 /** @type {import('../src/types').DeploymentConfig} */
-module.exports = async ({ createDeployment, createService }, { sha }) => {
+module.exports = async ({ createDeployment, createService, createIngress }, { sha }) => {
 	const namespace = 'default'
-	const labels = { app: 'slask' }
+	const labels = { app: 'yaml-converter' }
 	// const shortSha = sha.slice(0, 7)
+
 	await createDeployment(namespace,
 		{
 			metadata: {
-				name: "slask-nginx",
+				name: 'yaml-converter',
 				labels,
 			},
 			spec: {
@@ -21,23 +22,17 @@ module.exports = async ({ createDeployment, createService }, { sha }) => {
 					spec: {
 						containers: [
 							{
-								name: "slask2",
-								image: `nginx`,
-								livenessProbe: {
-									httpGet: {
-										path: "/",
-									}
-								},
+								name: "converter",
+								image: 'registry.knatofs.se/yaml-converter:latest',
 								imagePullPolicy: "Always",
 								ports: [
 									{
-										name: "http",
-										containerPort: 80,
+										containerPort: 8080,
 									},
 								],
 								resources: {
 									requests: {
-										memory: "28Mi",
+										memory: "40Mi",
 									},
 								},
 							},
@@ -48,16 +43,44 @@ module.exports = async ({ createDeployment, createService }, { sha }) => {
 		})
 	await createService(namespace, {
 		metadata: {
-			name: "slask",
+			name: "yaml-converter",
 		},
 		spec: {
 			selector: labels,
 			ports: [
 				{
 					name: "http",
-					port: 80,
+					port: 8080,
 				}
 			]
 		}
+	})
+	await createIngress(namespace, {
+		metadata: {
+			name: "yaml-converter",
+		},
+		spec: {
+			rules: [
+				{
+					host: "yaml-converter.knatofs.se",
+					http: {
+						paths: [
+							{
+								path: "/",
+								pathType: "Prefix",
+								backend: {
+									service: {
+										name: "yaml-converter",
+										port: {
+											number: 8080,
+										},
+									},
+								},
+							},
+						],
+					},
+				},
+			],
+		},
 	})
 }
