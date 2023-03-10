@@ -39,7 +39,7 @@ export default import(scriptFile)
 
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     console.log(`The event payload: ${payload}`);
-
+    console.log(process.env);
     if (config) {
       kc.loadFromString(config);
     } else {
