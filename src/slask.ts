@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as k8s from "@kubernetes/client-node";
 import { DeploymentConfig } from "./types";
+import { join } from "path";
 import {
   createDeployment,
   createIngress,
@@ -14,6 +15,7 @@ const scriptFile =
   process.env.SCRIPT_PATH ??
   "operations/deploy.js";
 
+const localPath = process.env.GITHUB_WORKSPACE ?? ".";
 core.info("Loading deployment script: " + scriptFile);
 
 const wrap =
@@ -31,15 +33,12 @@ const wrap =
       });
   };
 
-export default import(scriptFile)
+export default import(join(localPath, scriptFile))
   .then((m) => m.default as DeploymentConfig)
   .then((deployment) => {
     const kc = new k8s.KubeConfig();
     const config = core.getInput("k8sConfig");
 
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
-    console.log(process.env);
     if (config) {
       kc.loadFromString(config);
     } else {
