@@ -1,10 +1,12 @@
 {
   "name": "ts-kubernetes-action",
-  "version": "0.1.2",
+  "version": "0.1.6",
   "description": "Configures a Kubernetes deployment with a GitHub Action using JavaScript/TypeScript",
   "main": "dist/types.d.ts",
+  "bin": "lib/cli.js",
   "files": [
-    "dist"
+    "dist/types.d.ts",
+    "lib/cli.js"
   ],
   "keywords": [],
   "author": "Mats Törnberg",
@@ -27,5 +29,8 @@
     "esbuild": "^0.8.28",
     "ts-node": "^10.0.0",
     "vitest": "^0.29.2"
+  },
+  "dependencies": {
+    "ts-kubernetes-action": "^0.1.5"
   }
 }
