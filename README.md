@@ -18,7 +18,7 @@ jobs:
         scriptPath: deploy.cjs
 ```
 
-if you need to test the action without github actions you can use `npx ts-kubernetes-action deploy.csj '{"sha":"1231234"}'` last parameter is the github context if that is used in the deployment file, f.ex. git sha and it's not needed.
+if you need to test the action without github actions you can use `npx ts-kubernetes-action deploy.cjs '{"sha":"1231234"}'` last parameter is the github context if that is used in the deployment file, f.ex. git sha and it's not needed.
 
 then the deployment script file `/deploy.cjs`
 
