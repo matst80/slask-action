@@ -32,7 +32,8 @@ const wrap =
         }
       })
       .catch((e) => {
-        core.warning(e);
+        //core.warning(e);
+        core.setFailed(e);
       });
   };
 

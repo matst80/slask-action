@@ -7,7 +7,6 @@ author: 'Mats Törnberg'
 inputs:
   k8sConfig:
     description: 'Kubernetes config'
-    required: true
   scriptPath:
     description: "Path to the deployment to apply"
     default: 'deploy.js'
