@@ -132,3 +132,22 @@ export const createSecret = (
     k8sApi.createNamespacedSecret,
     k8sApi.replaceNamespacedSecret
   )(namespace, data, k8sApi);
+
+export const rolloutDeploymentContainer = (
+  name: string,
+  namespace: string,
+  containerName: string,
+  image: string,
+  k8sApi: k8s.AppsV1Api
+) => {
+  return k8sApi.readNamespacedDeployment(name, namespace).then((res) => {
+    const deployment = res.body;
+    const foundDeployment = deployment.spec?.template.spec?.containers.find(
+      (c) => c.name === containerName
+    );
+    if (foundDeployment) {
+      foundDeployment.image = image;
+      k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
+    }
+  });
+};
