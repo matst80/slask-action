@@ -6,6 +6,7 @@ jobs:
 
     steps:
       - using: .
+        name: Test deployment
         with:
           k8sConfig: ${{secrets.K8S_CONFIG}}
           scriptPath: ./test-deployment.cjs
