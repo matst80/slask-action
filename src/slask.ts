@@ -7,9 +7,7 @@ import { secretFactory, secretStorageFactory } from "./secrets";
 import { makeSlask } from "./slask-base";
 
 const scriptFile =
-  core.getInput("scriptPath") ??
-  process.env.SCRIPT_PATH ??
-  "operations/deploy.js";
+  core.getInput("scriptPath") ?? process.env.SCRIPT_PATH ?? "deploy.cjs";
 
 const localPath = process.env.GITHUB_WORKSPACE ?? ".";
 
