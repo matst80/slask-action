@@ -17,8 +17,8 @@ const file = join(localPath, scriptFile);
 core.info("Loading deployment script: " + file);
 
 const secretStore = secretStorageFactory(
-  join(localPath, core.getInput("configFile") ?? "./.slask"),
-  secretFactory(core.getInput("secret") ?? process.env.SLASK_SECRET)
+  join(localPath, core.getInput("configFile") || "./.slask"),
+  secretFactory(core.getInput("secret") || process.env.SLASK_SECRET)
 );
 
 export default makeSlask(core, file, github.context, secretStore);
