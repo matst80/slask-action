@@ -1,5 +1,5 @@
 {
-  "name": "ts-kubernetes-action",
+  "name": "slask-up",
   "version": "0.2.1",
   "description": "Configures a Kubernetes deployment with a GitHub Action using JavaScript/TypeScript",
   "main": "dist/types.d.ts",

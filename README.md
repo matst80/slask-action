@@ -1,7 +1,18 @@
 # slask-action
-Deploy scripted kubernetes applications without dependencies
+## Deploy scripted kubernetes applications without dependencies
+
+if you need to test the action without github actions you can use `npx ts-kubernetes-action deploy.cjs '{"sha":"1231234"}'` last parameter is the github context if that is used in the deployment file, f.ex. git sha and it's not needed.
+
+variables can be set with `npx ts-kubernetes-action deploy.cjs sha=1231234`
+
+configurations and secrets can be also be used, first store with `npx ts-kubernetes-action set key value` or `npx ts-kubernetes-action set-secret key value`
+
+to override config file use `--secrets-file=filename` and to override default encryption key `--secrets-key=32byte-key`
+
 
 to convert your yaml deployments to json/slask deployments you can try https://yaml-converter.knatofs.se/
+
+## Deploy with github actions
 
 example `action.yaml`:
 
@@ -17,8 +28,6 @@ jobs:
         k8sConfig: ${{ secrets.K8S_CONFIG }}
         scriptPath: deploy.cjs
 ```
-
-if you need to test the action without github actions you can use `npx ts-kubernetes-action deploy.cjs '{"sha":"1231234"}'` last parameter is the github context if that is used in the deployment file, f.ex. git sha and it's not needed.
 
 then the deployment script file `/deploy.cjs`
 
