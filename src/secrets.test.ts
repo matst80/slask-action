@@ -78,4 +78,5 @@ describe("secrets", () => {
 		expect(output).toEqual({ "unsafe": "slask secret=234=234234!", "first": "slask secret!" })
 
 	})
+
 })
