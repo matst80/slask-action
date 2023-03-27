@@ -5,6 +5,10 @@ branding:
   color: green
 author: 'Mats Törnberg'
 inputs:
+  secret:
+    description: Encryption key
+  configFile:
+    description: Override config file 
   k8sConfig:
     description: 'Kubernetes config'
   scriptPath:

@@ -1,0 +1,12 @@
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - using: .
+        with:
+          k8sConfig: ${{secrets.K8S_CONFIG}}
+          scriptPath: ./test-deployment.cjs
+          secret: ${{secrets.CONFIG_KEY}}
