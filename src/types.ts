@@ -22,7 +22,13 @@ export type DeployFunctions = {
   createNamespace: (namespace: V1Namespace) => Promise<unknown>;
 };
 
+export type SecretStore = {
+  get: (key: string) => Promise<string>;
+  getAll: () => Promise<Record<string, string>>;
+};
+
 export type DeploymentConfig = (
   deployFunctions: DeployFunctions,
-  context: Context
+  context: Context,
+  secretStore: SecretStore
 ) => Promise<any>;
