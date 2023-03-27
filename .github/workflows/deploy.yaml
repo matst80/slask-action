@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - using: .
+      - uses: .
         name: Test deployment
         with:
           k8sConfig: ${{secrets.K8S_CONFIG}}
