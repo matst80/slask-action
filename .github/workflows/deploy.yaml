@@ -1,3 +1,4 @@
+name: Test current version deploy
 on: push
 
 jobs:
@@ -8,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Deploy scripted application
-        uses: matst80/slask-action@main
+        uses: ./
         with:
           k8sConfig: ${{secrets.K8S_CONFIG}}
           scriptPath: ./test-deployment.js
