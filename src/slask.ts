@@ -12,13 +12,12 @@ const scriptFile =
   "operations/deploy.js";
 
 const localPath = process.env.GITHUB_WORKSPACE ?? ".";
-core.info("Loading deployment script: " + scriptFile);
 
 const file = join(localPath, scriptFile);
-core.info(file);
+core.info("Loading deployment script: " + file);
 
 const secretStore = secretStorageFactory(
-  core.getInput("configFile") ?? "./.slask",
+  join(localPath, core.getInput("configFile") ?? "./.slask"),
   secretFactory(core.getInput("secret") ?? process.env.SLASK_SECRET)
 );
 
