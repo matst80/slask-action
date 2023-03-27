@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 import { join } from "path";
+import { secretFactory, secretStorageFactory } from "./secrets";
 
 import { makeSlask } from "./slask-base";
 
@@ -16,4 +17,9 @@ core.info("Loading deployment script: " + scriptFile);
 const file = join(localPath, scriptFile);
 core.info(file);
 
-export default makeSlask(core, file, github.context);
+const secretStore = secretStorageFactory(
+  "./.slask",
+  secretFactory(core.getInput("secret") ?? process.env.SLASK_SECRET)
+);
+
+export default makeSlask(core, file, github.context, secretStore);

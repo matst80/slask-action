@@ -8,7 +8,7 @@ import {
   createService,
 } from "./apply";
 import * as k8s from "@kubernetes/client-node";
-import { DeploymentConfig } from "./types";
+import { DeploymentConfig, SecretStore } from "./types";
 
 export type ActionsCore = {
   setOutput: (name: string, value: any) => void;
@@ -17,7 +17,12 @@ export type ActionsCore = {
   info: (message: string) => void;
 };
 
-export const makeSlask = (core: ActionsCore, file: string, context: any) => {
+export const makeSlask = (
+  core: ActionsCore,
+  file: string,
+  context: any,
+  secretStore: SecretStore
+) => {
   const wrap =
     <R>(type: string, fn: (...args: any[]) => Promise<R>) =>
     (...args: any[]) => {
@@ -73,7 +78,8 @@ export const makeSlask = (core: ActionsCore, file: string, context: any) => {
             createNamespace(data, k8sCoreApi)
           ),
         },
-        context
+        context,
+        secretStore
       );
     })
     .catch((e) => {
