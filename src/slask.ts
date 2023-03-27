@@ -18,7 +18,7 @@ const file = join(localPath, scriptFile);
 core.info(file);
 
 const secretStore = secretStorageFactory(
-  "./.slask",
+  core.getInput("configFile") ?? "./.slask",
   secretFactory(core.getInput("secret") ?? process.env.SLASK_SECRET)
 );
 
