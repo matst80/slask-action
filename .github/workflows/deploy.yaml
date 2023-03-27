@@ -11,5 +11,5 @@ jobs:
         uses: ./
         with:
           k8sConfig: ${{secrets.K8S_CONFIG}}
-          scriptPath: ../test-deployment.cjs
+          scriptPath: ../test-deployment.js
           secret: ${{secrets.CONFIG_KEY}}
