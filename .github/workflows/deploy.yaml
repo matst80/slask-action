@@ -5,8 +5,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: .
-        name: Test deployment
+      - uses: actions/checkout@v3
+      - name: Deploy scripted application
+        uses: ./
         with:
           k8sConfig: ${{secrets.K8S_CONFIG}}
           scriptPath: ./test-deployment.cjs
