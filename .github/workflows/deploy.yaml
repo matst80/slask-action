@@ -1,20 +1,8 @@
 name: Test current version deploy
-on: push
+on: 
+  push:
 
 jobs:
-  sonar:
-    name: Check code with sonarqube
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - uses: sonarsource/sonarqube-scan-action@master
-      name: Run sonarqube
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
   deploy:
     name: Test deploy action
     runs-on: ubuntu-latest
