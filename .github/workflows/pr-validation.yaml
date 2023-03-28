@@ -13,7 +13,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         cache: "npm"
-    - name: Install deps
+    - name: Install all packages
       run: npm ci
     - name: Execute Unit tests
       run: npm run test
