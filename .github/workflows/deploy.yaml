@@ -3,7 +3,7 @@ on: push
 
 jobs:
   sonar:
-    name: Test deploy action
+    name: Check code with sonarqube
     runs-on: ubuntu-latest
 
     steps:
@@ -11,7 +11,7 @@ jobs:
       with:
         fetch-depth: 0
     - uses: sonarsource/sonarqube-scan-action@master
-      name: Check code with sonarqube
+      name: Run sonarqube
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
