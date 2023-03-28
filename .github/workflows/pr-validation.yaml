@@ -1,0 +1,32 @@
+name: Validate PR
+on: 
+  pull-request:
+
+jobs:
+  sonar:
+    name: Check code with sonarqube
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        cache: "npm"
+    - name: Execute Unit tests
+    - run: npm ci
+    - run: npm run test
+
+  sonar:
+    name: Check code with sonarqube
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: sonarsource/sonarqube-scan-action@master
+      name: Run sonarqube
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
