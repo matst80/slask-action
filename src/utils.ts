@@ -36,7 +36,7 @@ export const getCommandAndArguments = (processArgs: string[]) => {
   return {
     ...common,
     command: "slask",
-    file: join(process.cwd(), fileOrCommand),
+    file: join(process.cwd() ?? ".", fileOrCommand),
   };
 };
 export const getOptions = (
