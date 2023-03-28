@@ -1,28 +1,40 @@
 name: Validate PR
 on: 
-  pull-request:
+  pull_request:
 
 jobs:
-  sonar:
-    name: Check code with sonarqube
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
+        node-version: 18
         cache: "npm"
+    - name: Install all packages
+      run: npm ci
     - name: Execute Unit tests
-    - run: npm ci
-    - run: npm run test
-
-  sonar:
-    name: Check code with sonarqube
+      run: npm run test
+  test-deploy:
+    name: Test deploy action
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Deploy scripted application
+        uses: ./
+        with:
+          k8sConfig: ${{secrets.K8S_CONFIG}}
+          scriptPath: ./test-deployment.js
+          secret: ${{secrets.CONFIG_KEY}}
+  sonar:
+    name: Check code with sonarqube
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - uses: sonarsource/sonarqube-scan-action@master

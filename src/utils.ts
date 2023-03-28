@@ -1,12 +1,15 @@
 import { join } from "path";
+
 export const getCommandAndArguments = (processArgs: string[]) => {
   const [, , fileOrCommand, ...rest] = processArgs;
 
   const values = Object.fromEntries(
     rest.filter((d) => d.includes("=")).map((arg) => arg.split("="))
   );
+  const basePath = process?.cwd ? process.cwd() ?? "." : ".";
   const args = rest.filter((d) => !d.includes("="));
-  const secretsFile = join(process.cwd(), values["--secrets-file"] ?? ".slask");
+
+  const secretsFile = join(basePath, values["--secrets-file"] ?? ".slask");
   const common = {
     values,
     args,
@@ -36,14 +39,10 @@ export const getCommandAndArguments = (processArgs: string[]) => {
   return {
     ...common,
     command: "slask",
-    file: join(process.cwd() ?? ".", fileOrCommand),
+    file: join(basePath, fileOrCommand ?? "deploy.cjs"),
   };
 };
-export const getOptions = (
-  file: string,
-  args: string[],
-  values: Record<string, string>
-) => {
+export const getOptions = (args: string[], values: Record<string, string>) => {
   const sha = require("child_process")
     .execSync("git rev-parse HEAD")
     .toString()

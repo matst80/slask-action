@@ -19,7 +19,7 @@ describe("argument parser", () => {
     const processArgs = ["", ""];
     const { file, args, values } = getCommandAndArguments(processArgs);
     expect(args).toEqual([]);
-    expect(file).toBeFalsy();
+    expect(file).toContain("deploy.cjs");
     expect(values).toEqual({});
   });
 });
@@ -35,8 +35,8 @@ describe("options merger", () => {
       "test=plupp",
       "b=false",
     ];
-    const { file, args, values } = getCommandAndArguments(processArgs);
-    const options = getOptions(file, args, values);
+    const { args, values } = getCommandAndArguments(processArgs);
+    const options = getOptions(args, values);
     const sha = require("child_process")
       .execSync("git rev-parse HEAD")
       .toString()

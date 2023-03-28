@@ -25,7 +25,7 @@ if (command === "print-env") {
 } else if (command === "set") {
   secretStorage.set(args[0], args[1]);
 } else {
-  const opt = getOptions(file ?? "", args, values);
+  const opt = getOptions(args, values);
 
   const fakeCore: ActionsCore = {
     setOutput: (name: string, value: any) => {
