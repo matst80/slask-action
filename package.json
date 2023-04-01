@@ -1,6 +1,6 @@
 {
   "name": "slask-up",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Configures a Kubernetes deployment with a GitHub Action using JavaScript/TypeScript",
   "main": "dist/types.d.ts",
   "bin": "lib/cli.js",
@@ -13,7 +13,7 @@
   "scripts": {
     "types": "tsc --emitDeclarationOnly --sourceMap",
     "dev": "esbuild src/cli.ts src/slask.ts --bundle --outdir=lib --platform=node --target=node16 --watch",
-    "build": "npm run types & esbuild src/cli.ts src/slask.ts --bundle --outdir=lib --platform=node --target=node16",
+    "build": "npm run types & esbuild src/cli.ts src/slask.ts --bundle --tree-shaking=true --outdir=lib --platform=node --target=node16",
     "test": "vitest --coverage"
   },
   "license": "ISC",

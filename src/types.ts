@@ -1,34 +1,38 @@
-import type { Context } from "@actions/github/lib/context";
+import type { Context } from "@actions/github/lib/context"
 import type {
   V1ConfigMap,
+  V1DaemonSet,
   V1Deployment,
   V1Ingress,
+  V1Job,
   V1Namespace,
   V1PersistentVolumeClaim,
   V1Secret,
   V1Service,
-} from "@kubernetes/client-node";
+} from "@kubernetes/client-node"
 
 export type DeployFunctions = {
-  createDeployment: (namespace: string, data: V1Deployment) => Promise<unknown>;
-  createService: (namespace: string, data: V1Service) => Promise<unknown>;
-  createIngress: (namespace: string, data: V1Ingress) => Promise<unknown>;
+  createDeployment: (namespace: string, data: V1Deployment) => Promise<unknown>
+  createService: (namespace: string, data: V1Service) => Promise<unknown>
+  createIngress: (namespace: string, data: V1Ingress) => Promise<unknown>
   createPersistentVolumeClaim: (
     namespace: string,
     data: V1PersistentVolumeClaim
-  ) => Promise<unknown>;
-  createConfigMap: (namespace: string, data: V1ConfigMap) => Promise<unknown>;
-  createSecret: (namespace: string, data: V1Secret) => Promise<unknown>;
-  createNamespace: (namespace: V1Namespace) => Promise<unknown>;
-};
+  ) => Promise<unknown>
+  createConfigMap: (namespace: string, data: V1ConfigMap) => Promise<unknown>
+  createSecret: (namespace: string, data: V1Secret) => Promise<unknown>
+  createNamespace: (namespace: V1Namespace) => Promise<unknown>
+  createJob: (namespace: V1Namespace, data: V1Job) => Promise<unknown>
+  createDaemonSet: (namespace: V1Namespace, data: V1DaemonSet) => Promise<unknown>
+}
 
 export type SecretStore = {
-  get: (key: string) => Promise<string>;
-  getAll: () => Promise<Record<string, string>>;
-};
+  get: (key: string) => Promise<string>
+  getAll: () => Promise<Record<string, string>>
+}
 
 export type DeploymentConfig = (
   deployFunctions: DeployFunctions,
   context: Context,
   secretStore: SecretStore
-) => Promise<any>;
+) => Promise<any>

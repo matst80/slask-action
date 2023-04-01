@@ -1,21 +1,23 @@
 import {
   createConfigMap,
+  createDaemonSet,
   createDeployment,
   createIngress,
+  createJob,
   createNamespace,
   createPersistentVolumeClaim,
   createSecret,
   createService,
-} from "./apply";
-import * as k8s from "@kubernetes/client-node";
-import { DeploymentConfig, SecretStore } from "./types";
+} from "./apply"
+import * as k8s from "@kubernetes/client-node"
+import { DeploymentConfig, SecretStore } from "./types"
 
 export type ActionsCore = {
-  setOutput: (name: string, value: any) => void;
-  setFailed: (message: string) => void;
-  getInput: (name: string, options?: any) => string | undefined;
-  info: (message: string) => void;
-};
+  setOutput: (name: string, value: any) => void
+  setFailed: (message: string) => void
+  getInput: (name: string, options?: any) => string | undefined
+  info: (message: string) => void
+}
 
 export const makeSlask = (
   core: ActionsCore,
@@ -25,34 +27,35 @@ export const makeSlask = (
 ) => {
   const wrap =
     <R>(type: string, fn: (...args: any[]) => Promise<R>) =>
-    (...args: any[]) => {
-      return fn(...args)
-        .then(({ body }: any) => {
-          if (body?.metadata?.name) {
-            core.setOutput(body?.metadata?.name, body);
-            core.info(`Applied ${type}: ${body.metadata.name}`);
-          }
-        })
-        .catch((e) => {
-          //core.warning(e);
-          core.setFailed(e);
-        });
-    };
+      (...args: any[]) => {
+        return fn(...args)
+          .then(({ body }: any) => {
+            if (body?.metadata?.name) {
+              core.setOutput(body?.metadata?.name, body)
+              core.info(`Applied ${type}: ${body.metadata.name}`)
+            }
+          })
+          .catch((e) => {
+            //core.warning(e);
+            core.setFailed(e)
+          })
+      }
   import(file)
     .then((m) => m.default as DeploymentConfig)
     .then((deployment) => {
-      const kc = new k8s.KubeConfig();
-      const config = core.getInput("k8sConfig");
+      const kc = new k8s.KubeConfig()
+      const config = core.getInput("k8sConfig")
 
       if (config) {
-        kc.loadFromString(config);
+        kc.loadFromString(config)
       } else {
-        kc.loadFromDefault();
+        kc.loadFromDefault()
       }
 
-      const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
-      const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
-      const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
+      const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api)
+      const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api)
+      const k8sBatchApi = kc.makeApiClient(k8s.BatchV1Api)
+      const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api)
 
       return deployment(
         {
@@ -77,15 +80,21 @@ export const makeSlask = (
           createNamespace: wrap("namespace", (data) =>
             createNamespace(data, k8sCoreApi)
           ),
+          createJob: wrap("job", (namespace, data) =>
+            createJob(namespace, data, k8sBatchApi)
+          ),
+          createDaemonSet: wrap("daemonset", (namespace, data) =>
+            createDaemonSet(namespace, data, k8sAppsApi)
+          ),
         },
         context,
         secretStore
-      );
+      )
     })
     .catch((e) => {
-      core.setFailed(e);
+      core.setFailed(e)
     })
     .finally(() => {
-      core.info("Done");
-    });
-};
+      core.info("Done")
+    })
+}

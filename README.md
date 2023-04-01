@@ -1,4 +1,4 @@
-# slask-action
+# slask-up and github slask-action
 ## Deploy scripted kubernetes applications without dependencies
 
 if you need to test the action without github actions you can use `npx slask-up deploy.cjs '{"sha":"1231234"}'` last parameter is the github context if that is used in the deployment file, f.ex. git sha and it's not needed.
