@@ -1,6 +1,6 @@
 {
-  "name": "ts-kubernetes-action",
-  "version": "0.1.8",
+  "name": "slask-up",
+  "version": "0.2.3",
   "description": "Configures a Kubernetes deployment with a GitHub Action using JavaScript/TypeScript",
   "main": "dist/types.d.ts",
   "bin": "lib/cli.js",
@@ -12,25 +12,21 @@
   "author": "Mats Törnberg",
   "scripts": {
     "types": "tsc --emitDeclarationOnly --sourceMap",
-    "cli": "esbuild src/cli.ts --bundle --outdir=lib --platform=node --target=node16 --watch",
-    "dev": "esbuild src/slask.ts --bundle --outdir=lib --platform=node --target=node16 --watch",
-    "build": "esbuild src/slask.ts src/cli.ts --bundle --outdir=lib --platform=node --target=node16",
-    "deploy": "ts-node operations/index.ts",
+    "dev": "esbuild src/cli.ts src/slask.ts --bundle --outdir=lib --platform=node --target=node16 --watch",
+    "build": "npm run types & esbuild src/cli.ts src/slask.ts --bundle --tree-shaking=true --outdir=lib --platform=node --target=node16",
     "test": "vitest --coverage"
   },
   "license": "ISC",
   "peerDependencies": {
-    "@actions/core": "^1.0.0",
-    "@actions/github": "^2.0.1",
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
     "@kubernetes/client-node": "^0.18.1"
   },
   "devDependencies": {
-    "@vitest/coverage-c8": "^0.29.2",
-    "esbuild": "^0.8.28",
-    "ts-node": "^10.0.0",
-    "vitest": "^0.29.2"
-  },
-  "dependencies": {
-    "ts-kubernetes-action": "^0.1.5"
+    "@vitest/coverage-c8": "^0.29.7",
+    "typescript": "^5.0.2",
+    "esbuild": "^0.17.14",
+    "ts-node": "^10.9.1",
+    "vitest": "^0.29.7"
   }
 }

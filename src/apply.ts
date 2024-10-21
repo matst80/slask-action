@@ -1,8 +1,10 @@
 import * as k8s from "@kubernetes/client-node";
 import {
   V1ConfigMap,
+  V1DaemonSet,
   V1Deployment,
   V1Ingress,
+  V1Job,
   V1Namespace,
   V1PersistentVolumeClaim,
   V1Service,
@@ -133,21 +135,24 @@ export const createSecret = (
     k8sApi.replaceNamespacedSecret
   )(namespace, data, k8sApi);
 
-export const rolloutDeploymentContainer = (
-  name: string,
+export const createJob = (
   namespace: string,
-  containerName: string,
-  image: string,
+  data: V1Job,
+  k8sApi: k8s.BatchV1Api
+) =>
+  updateOrCreate(
+    k8sApi.listNamespacedJob,
+    k8sApi.createNamespacedJob,
+    k8sApi.replaceNamespacedJob
+  )(namespace, data, k8sApi);
+
+export const createDaemonSet = (
+  namespace: string,
+  data: V1DaemonSet,
   k8sApi: k8s.AppsV1Api
-) => {
-  return k8sApi.readNamespacedDeployment(name, namespace).then((res) => {
-    const deployment = res.body;
-    const foundDeployment = deployment.spec?.template.spec?.containers.find(
-      (c) => c.name === containerName
-    );
-    if (foundDeployment) {
-      foundDeployment.image = image;
-      k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
-    }
-  });
-};
+) =>
+  updateOrCreate(
+    k8sApi.listNamespacedDaemonSet,
+    k8sApi.createNamespacedDaemonSet,
+    k8sApi.replaceNamespacedDaemonSet
+  )(namespace, data, k8sApi);
