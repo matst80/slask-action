@@ -1,6 +1,6 @@
 {
   "name": "ts-kubernetes-action",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "Configures a Kubernetes deployment with a GitHub Action using JavaScript/TypeScript",
   "main": "dist/types.d.ts",
   "bin": "lib/cli.js",
@@ -14,7 +14,7 @@
     "types": "tsc --emitDeclarationOnly --sourceMap",
     "cli": "esbuild src/cli.ts --bundle --outdir=lib --platform=node --target=node16 --watch",
     "dev": "esbuild src/slask.ts --bundle --outdir=lib --platform=node --target=node16 --watch",
-    "build": "esbuild src/slask.ts --bundle --outdir=lib --platform=node --target=node16",
+    "build": "esbuild src/slask.ts src/cli.ts --bundle --outdir=lib --platform=node --target=node16",
     "deploy": "ts-node operations/index.ts",
     "test": "vitest --coverage"
   },
